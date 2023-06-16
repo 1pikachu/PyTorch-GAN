@@ -22,6 +22,7 @@ try:
     from context_func import context_func
 except ModuleNotFoundError as e:
     print("!!!pls check how to add context_func.py from launch_benchmark.sh")
+    import sys
     sys.exit(0)
 
 os.makedirs("images", exist_ok=True)
@@ -157,9 +158,8 @@ class Discriminator(nn.Module):
 generator = Generator()
 discriminator = Discriminator()
 
-if cuda:
-    generator.cuda()
-    discriminator.cuda()
+generator.to(opt.device)
+discriminator.to(opt.device)
 
 # Initialize weights
 generator.apply(weights_init_normal)

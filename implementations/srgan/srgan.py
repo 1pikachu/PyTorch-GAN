@@ -116,12 +116,11 @@ feature_extractor.eval()
 criterion_GAN = torch.nn.MSELoss()
 criterion_content = torch.nn.L1Loss()
 
-if cuda:
-    generator = generator.cuda()
-    discriminator = discriminator.cuda()
-    feature_extractor = feature_extractor.cuda()
-    criterion_GAN = criterion_GAN.cuda()
-    criterion_content = criterion_content.cuda()
+generator = generator.to(opt.device)
+discriminator = discriminator.to(opt.device)
+feature_extractor = feature_extractor.to(opt.device)
+criterion_GAN = criterion_GAN.to(opt.device)
+criterion_content = criterion_content.to(opt.device)
 
 if opt.epoch != 0:
     # Load pretrained models

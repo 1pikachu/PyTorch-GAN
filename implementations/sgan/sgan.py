@@ -22,6 +22,7 @@ try:
     from context_func import context_func
 except ModuleNotFoundError as e:
     print("!!!pls check how to add context_func.py from launch_benchmark.sh")
+    import sys
     sys.exit(0)
 
 os.makedirs("images", exist_ok=True)
@@ -167,11 +168,10 @@ auxiliary_loss = torch.nn.CrossEntropyLoss()
 generator = Generator()
 discriminator = Discriminator()
 
-if cuda:
-    generator.cuda()
-    discriminator.cuda()
-    adversarial_loss.cuda()
-    auxiliary_loss.cuda()
+generator.to(opt.device)
+discriminator.to(opt.device)
+adversarial_loss.to(opt.device)
+auxiliary_loss.to(opt.device)
 
 # Initialize weights
 generator.apply(weights_init_normal)

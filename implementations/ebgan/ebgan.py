@@ -22,6 +22,7 @@ try:
     from context_func import context_func
 except ModuleNotFoundError as e:
     print("!!!pls check how to add context_func.py from launch_benchmark.sh")
+    import sys
     sys.exit(0)
 
 os.makedirs("images", exist_ok=True)
@@ -162,10 +163,9 @@ pixelwise_loss = nn.MSELoss()
 generator = Generator()
 discriminator = Discriminator()
 
-if cuda:
-    generator.cuda()
-    discriminator.cuda()
-    pixelwise_loss.cuda()
+generator.to(opt.device)
+discriminator.to(opt.device)
+pixelwise_loss.to(opt.device)
 
 # Initialize weights
 generator.apply(weights_init_normal)

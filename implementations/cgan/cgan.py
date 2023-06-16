@@ -22,6 +22,7 @@ try:
     from context_func import context_func
 except ModuleNotFoundError as e:
     print("!!!pls check how to add context_func.py from launch_benchmark.sh")
+    import sys
     sys.exit(0)
 
 os.makedirs("images", exist_ok=True)
@@ -147,10 +148,9 @@ adversarial_loss = torch.nn.MSELoss()
 generator = Generator()
 discriminator = Discriminator()
 
-if cuda:
-    generator.cuda()
-    discriminator.cuda()
-    adversarial_loss.cuda()
+generator.to(opt.device)
+discriminator.to(opt.device)
+adversarial_loss.to(opt.device)
 
 # Configure data loader
 os.makedirs("../../data/mnist", exist_ok=True)

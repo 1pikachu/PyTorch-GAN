@@ -133,9 +133,8 @@ class Discriminator(nn.Module):
 generator = Generator()
 discriminator = Discriminator()
 
-if cuda:
-    generator.cuda()
-    discriminator.cuda()
+generator.to(opt.device)
+discriminator.to(opt.device)
 
 # Configure data loader
 os.makedirs("../../data/mnist", exist_ok=True)
