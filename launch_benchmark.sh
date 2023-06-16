@@ -10,7 +10,6 @@ function main {
 
     # requirements
 
-
     cp oob-common/context_func.py . || true 
 
     # if multiple use 'xxx,xxx,xxx'

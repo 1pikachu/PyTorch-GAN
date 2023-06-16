@@ -293,6 +293,7 @@ if opt.inference:
         amp_enable = False
         amp_dtype = torch.float32
 
+    generator = generator.eval()
     if opt.device == "xpu":
         generator = torch.xpu.optimize(model=generator, dtype=amp_dtype)
         print("---- enable xpu optimize")
