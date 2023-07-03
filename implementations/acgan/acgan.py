@@ -19,6 +19,8 @@ from torch.quantization import get_default_qconfig
 from torch.quantization.quantize_fx import prepare_fx, convert_fx
 
 try:
+    import sys
+    sys.path.append('.')
     from context_func import context_func
 except ModuleNotFoundError as e:
     print("!!!pls check how to add context_func.py from launch_benchmark.sh")
