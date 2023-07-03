@@ -193,7 +193,7 @@ def generate(netG, batchsize, device):
         netG, fixed_noise = netG_oob, fixed_noise_oob
 
     labels = np.array([num for _ in range(10) for num in range(10)])
-    labels = Variable(LongTensor(labels))
+    labels = Variable(LongTensor(labels)).to(opt.device)
 
     if opt.precision == 'int8':
         from neural_compressor.experimental import Quantization, common
@@ -233,6 +233,8 @@ def generate(netG, batchsize, device):
     with torch.no_grad():
         for i in range(total_iters):
             fixed_noise = Variable(FloatTensor(np.random.normal(0, 1, (10 ** 2, opt.latent_dim))))
+            labels = np.array([num for _ in range(10) for num in range(10)])
+            labels = Variable(LongTensor(labels))
             if opt.channels_last or opt.device == "cuda":
                 fixed_noise_oob = fixed_noise
                 try:
@@ -244,6 +246,7 @@ def generate(netG, batchsize, device):
             tic = time.time()
             with context_func(opt.profile if i == profile_len else False, opt.device, fuser_mode) as prof:
                 fixed_noise = fixed_noise.to(device=device)
+                labels = labels.to(device)
                 fake = netG(fixed_noise, labels)
                 if opt.device == "xpu":
                     torch.xpu.synchronize()
